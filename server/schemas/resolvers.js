@@ -13,6 +13,16 @@ const resolvers = {
             }
 
             throw new AuthenticationError('Not logged in');
+        },
+
+        users: async () => {
+            return User.find()
+                .select('-__v -password')
+        },
+
+        user: async (parent, { username }) => {
+            return User.findOne({ username })
+                .select('-__v -password')
         }
     },
 
@@ -39,9 +49,44 @@ const resolvers = {
             const token = signToken(user);
 
             return { token , user };
-        }
-    }
+        },
 
+        saveBook: async (parent, { bookId, authors, description, title, image, link }, context) => {
+            if (context.user) {
+                const addBook = await User.findOneAndUpdate(
+                    {_id: context.user._id},
+                    { $push: { savedBooks: {
+                        authors,
+                        description,
+                        bookId,
+                        image,
+                        link,
+                        title
+                    }}},
+                    { new: true, runValidators: true }
+                );
+
+                return addBook;
+            }
+
+            throw new AuthenticationError('You need to be logged in!')
+        },
+
+        removeBook: async (parent, { bookId }, context) => {
+            if (context.user) {
+                const removeBook = await User.findOneAndUpdate(
+                    {_id: context.user._id},
+                    { $pull: { savedBooks: {bookId: bookId}}},
+                    { new: true }
+                )
+
+                return removeBook;
+            }
+
+            throw new AuthenticationError('You need to be logged in!')
+        }
+
+    }
 };
 
 module.exports = resolvers;
