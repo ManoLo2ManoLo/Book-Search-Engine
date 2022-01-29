@@ -62,7 +62,7 @@ const SearchBooks = () => {
     const savedBooks = searchedBooks.find((book) => book.bookId === bookId);
     const authors = savedBooks.authors || "";
     const description = savedBooks.description || "";
-    const image = savedBooks.id || "";
+    const image = savedBooks.image || "";
     const link = savedBooks.link || "";
     const title = savedBooks.title || "";
 
@@ -79,6 +79,7 @@ const SearchBooks = () => {
       }, token)
 
       setSavedBookIds([...savedBookIds, savedBooks.bookId]);
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }
