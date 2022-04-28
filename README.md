@@ -1,11 +1,12 @@
 # Book-Search-Engine
 
-## LINKS SECTION
-Link to GitHub Repository: https://github.com/ManoLo2ManoLo/Book-Search-Engine <br />
+## Link(s)
 Link to Application: https://manolo-book-search-engine.herokuapp.com/
 
 ## Table Of Contents
 * [Description](#description)
+* [Clone Repository](#clone-repository)
+* [Install Dependencies](#install-dependencies)
 * [Start Application](#start-application)
 * [Screenshot](#screenshot)
 * [Credits](#credits)
